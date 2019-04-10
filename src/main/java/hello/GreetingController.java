@@ -5,6 +5,7 @@ import hello.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +24,7 @@ public class GreetingController {
         return "greeting";
     }
 
-    @GetMapping("/add")
+    @PostMapping
     public String addUser(@RequestParam String name,
                                         @RequestParam String email,
                                         Map<String, Object> model)
@@ -33,7 +34,9 @@ public class GreetingController {
         user.setEmail(email);
         userRepository.save(user);
         model.put("user", user);
-        return "Saved";
+        Iterable<User> users=userRepository.findAll();
+        model.put("users",users);
+        return "index";
     }
 
     @GetMapping("/all")
@@ -46,8 +49,26 @@ public class GreetingController {
     }
 
     @GetMapping
-    public String main(Map<String, Object> map)
+    public String main(Map<String, Object> model)
     {
+        Iterable<User> users=userRepository.findAll();
+        model.put("users",users);
+        return "index";
+    }
+
+    @PostMapping("filter")
+    public String filter(@RequestParam String filter, Map<String, Object> model)
+    {
+        List<User> users;
+        if(filter!=null && !filter.isEmpty())
+        {
+            users = userRepository.findByName(filter);
+        }
+        else
+        {
+            users = (List<User>) userRepository.findAll();
+        }
+        model.put("users",users);
         return "index";
     }
 
