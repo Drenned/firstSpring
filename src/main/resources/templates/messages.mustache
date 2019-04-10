@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+ <div>Таки вот вам сообщения</div>
+        {{#messages}}
+            <div>
+            <b>{{text}}</b>
+            <span>{{tag}}</span>
+            </div>
+        {{/messages}}
+
+       <br>
+
+       <div>
+               <form method="post" action="addMessages">
+               <input type="text" name="text" placeholder="Введите текст">
+               <input type="text" name="tag" placeholder="Введите тэг">
+               <button type="submit">Добавить</button>
+               </form>
+       </div>
+</body>
+</html>

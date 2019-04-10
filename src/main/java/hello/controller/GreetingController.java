@@ -1,4 +1,4 @@
-package hello;
+package hello.controller;
 
 import hello.repository.UserRepository;
 import hello.user.User;
@@ -59,14 +59,14 @@ public class GreetingController {
     @PostMapping("filter")
     public String filter(@RequestParam String filter, Map<String, Object> model)
     {
-        List<User> users;
+        Iterable<User> users;
         if(filter!=null && !filter.isEmpty())
         {
             users = userRepository.findByName(filter);
         }
         else
         {
-            users = (List<User>) userRepository.findAll();
+            users = userRepository.findAll();
         }
         model.put("users",users);
         return "index";
