@@ -11,18 +11,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller
-public class GreetingController {
+public class MainController {
 
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Map<String, Object> map) {
-        map.put("name", name);
+    @GetMapping("/")
+    public String greeting(Map<String, Object> map) {
         return "greeting";
     }
 
-    @PostMapping
+    @PostMapping("addUser")
     public String addUser(@RequestParam String name,
                                         @RequestParam String email,
                                         Map<String, Object> model)
@@ -34,7 +33,7 @@ public class GreetingController {
         model.put("user", user);
         Iterable<User> users=userRepository.findAll();
         model.put("users",users);
-        return "index";
+        return "main";
     }
 
     @GetMapping("/all")
@@ -46,12 +45,12 @@ public class GreetingController {
         return "all";
     }
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Map<String, Object> model)
     {
         Iterable<User> users=userRepository.findAll();
         model.put("users",users);
-        return "index";
+        return "main";
     }
 
     @PostMapping("filter")
@@ -67,7 +66,7 @@ public class GreetingController {
             users = userRepository.findAll();
         }
         model.put("users",users);
-        return "index";
+        return "main";
     }
 
 }

@@ -19,6 +19,7 @@
                <form method="post" action="addMessages">
                <input type="text" name="text" placeholder="Введите текст">
                <input type="text" name="tag" placeholder="Введите тэг">
+               <input type="hidden" name="_csrf" value="{{_csrf.token}}">
                <button type="submit">Добавить</button>
                </form>
        </div>

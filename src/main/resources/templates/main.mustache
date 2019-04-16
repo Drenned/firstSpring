@@ -23,9 +23,10 @@
         {{/users}}
     <br>
     <div>
-        <form method="post">
-        <input type="text" name="name" placeholder="Введите значение">
-        <input type="text" name="email" placeholder="Емэйл">
+        <form method="post" action="addUser">
+        <input type="text" name="name" placeholder="Введите значение"/>
+        <input type="text" name="email" placeholder="Емэйл"/>
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
         <button type="submit">Добавить</button>
         </form>
      </div>
@@ -33,11 +34,19 @@
      <br>
      <div>
      <form method="post" action="filter">
-     <input type="text" name="filter" placeholder="Фильтр">
+     <input type="text" name="filter" placeholder="Фильтр"/>
+     <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
      <button type="submit">Отфильтровать</button>
      </form>
      </div>
     <button onclick=location.href="/messages">Сообщения</button>
+    <br>
+    <div>
+    <form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                <input type="submit" value="Log out"/>
+            </form>
+    </div>
 
 </body>
 </html>
