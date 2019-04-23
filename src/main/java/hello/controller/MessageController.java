@@ -1,8 +1,10 @@
 package hello.controller;
 
+import hello.model.User;
 import hello.repository.MessageRepository;
 import hello.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +19,13 @@ public class MessageController {
 
 
     @PostMapping("addMessages")
-    public String addMessages(@RequestParam String text, @RequestParam String tag,
-                              Map<String, Object> model)
+    public String addMessages(
+            @AuthenticationPrincipal User user,
+            @RequestParam String text,
+            @RequestParam String tag,
+            Map<String, Object> model)
     {
-        Message message = new Message(text, tag);
+        Message message = new Message(text, tag, user);
         messageRepository.save(message);
         Iterable<Message> messages = messageRepository.findAll();
         model.put("messages", messages);
